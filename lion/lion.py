@@ -20,6 +20,7 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 from sklearn.naive_bayes import GaussianNB
 from sklearn.svm import SVC
+from sklearn.datasets import load_iris
 
 def print_library_versions():
     print('Python: {}'.format(sys.version))
@@ -34,6 +35,14 @@ def load_dataset(url="https://raw.githubusercontent.com/jbrownlee/Datasets/maste
     my_names = ['sepal-length', 'sepal-width', 'petal-length', 'petal-width', 'class']
     local_dataset = read_csv(url, names=my_names) 
     return local_dataset
+
+def load_dataset2():
+    iris = load_iris()
+    return iris
+
+def load_clipboard():
+    clp = pandas.read_clipboard(sep='\\s+')
+    return clp
 
 def print_dataset(dataset):
     print('shape: {}'.format(dataset.shape))
@@ -79,14 +88,17 @@ def prediction_model(X_train, Y_train, X_validation, Y_validation):
     model = SVC(gamma='auto')
     model.fit(X_train, Y_train)
     predictions = model.predict(X_validation)
+    print(X_validation)
+    print(predictions)
     print(accuracy_score(Y_validation, predictions))
     print(confusion_matrix(Y_validation, predictions))
     print(classification_report(Y_validation, predictions))
 
-
-
-
-
-    
-
-
+def predict_iris_class(sepallength, sepalwidth, petallength, petalwidth):
+    dataset = load_dataset()
+    split = split_dataset(dataset)
+    model = SVC(gamma='auto')
+    model.fit(split[0], split[2])
+    user_data = [sepallength, sepalwidth, petallength, petalwidth]
+    iris_class = model.predict([user_data])
+    return iris_class[0]

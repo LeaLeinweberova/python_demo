@@ -1,17 +1,14 @@
 import lion
+import sys
+ 
+if __name__ == "__main__":
+    if len(sys.argv) != 5:
+        print("nasol 4 hodnoty")
+        sys.exit(1)
 
-dataset = lion.load_dataset()
-
-vysledek_split = lion.split_dataset(dataset)
-
-lion.test_models(vysledek_split[0], vysledek_split[2])
-
-lion.prediction_model(vysledek_split[0], vysledek_split[2], vysledek_split[1], vysledek_split[3])
-
-"""
-
-#lion.print_dataset(dataset)
-#lion.plot_dataset(dataset, x=False, y=False)
-#lion.plot_dataset(dataset, mykind='hist', x=False, y=False)
-
-"""
+    sepallength = float(sys.argv[1])
+    sepalwidth = float(sys.argv[2])
+    petallength = float(sys.argv[3])
+    petalwidth = float(sys.argv[4])
+    iris_class = lion.predict_iris_class(sepallength, sepalwidth, petallength, petalwidth)
+    print('Class ',iris_class)
